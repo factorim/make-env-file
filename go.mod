@@ -1,3 +1,3 @@
-module github.com/factorim/make-env
+module github.com/factorim/make-env-file
 
-go 1.15
+go 1.16

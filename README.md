@@ -36,18 +36,24 @@ Clone the repository and execute:
 go install
 ```
 
-It will install the Make Env File in `GOPATH`. Then it should allows to run:
+It will install the Make Env File in `GOPATH`. Then it allows to run:
 
 ```
 make-env-file -h
 ```
 
-## Use binary
+## Build binary
 
-Get the `make-env-file` from the repository and execute it anywhere:
+Execute the `make` command to generate a the `make-env-file` file:
 
 ```
-make-env-file -h
+make build
+```
+
+It will create a `make-env-file` in the current directory. Then it allows to run:
+
+```
+./make-env-file -h
 ```
 
 ## How to use
@@ -60,7 +66,7 @@ To get help, execute:
 make-env-file -h
 ```
 
-It should display:
+It displays:
 
 ```
 Usage of make-env:
@@ -79,7 +85,7 @@ Usage of make-env:
 Create a `dest` file if it is not existing:
 
 ```
- ./make-env-file -source=./example/.env.example -dest=./example/.env2
+ make-env-file -source=./example/.env.example -dest=./example/.env2
 ```
 
 Results:
@@ -91,7 +97,7 @@ Results:
 Check an already existing `dest` file:
 
 ```
- ./make-env-file -source=./example/.env.example -dest=./example/.env
+ make-env-file -source=./example/.env.example -dest=./example/.env
 ```
 
 Results:
@@ -104,7 +110,7 @@ Results:
 Create a `dest` file or overwrite if it is already existing:
 
 ```
- ./make-env-file -source=./example/.env.example -dest=./example/.env -overwrite
+ make-env-file -source=./example/.env.example -dest=./example/.env -overwrite
 ```
 
 Results:

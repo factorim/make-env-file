@@ -3,7 +3,7 @@ package main
 import (
 	"log"
 
-	"github.com/factorim/make-env/makeenvfile"
+	"github.com/factorim/make-env-file/makeenvfile"
 )
 
 func init() {
