@@ -2,7 +2,7 @@
 
 Make Env File is a tool to generate an environment file (ex: .env) from another environment file (ie: .env.example).
 
-Sometime applications have a default environment file that must be copied to launch them. It can be useful to have a dedicated tool to do that instead of creating a quick script every time it is required.
+Sometime applications have a default environment file that must be copied to launch them. It can be useful to have a dedicated tested tool to do that instead of creating a quick script every time it is required.
 
 ## Features
 
@@ -16,13 +16,39 @@ Make Env File displays differences between the two files:
 
 For security reasons no values are displayed in the log.
 
+If format errors are found in the files, the tool will stop and return an error.
+
 ### Copy the file
 
-Make Env File creates a `dest` env file from a `source` env file if not existing. Once created it will not be overwritten by other instance of Make Env File.
+Make Env File creates a `dest` env file from a `source` env file if not existing. Once created other instance of Make Env File will do nothing.
 
 `dest` file can overwritten it if the option `overwrite` is activacted.
 
 In every case, if files are the same it does nothing.
+
+## Install
+
+## Install binary
+
+Clone the repository and execute:
+
+```
+go install
+```
+
+It will install the Make Env File in `GOPATH`. Then it should allows to run:
+
+```
+make-env-file -h
+```
+
+## Use binary
+
+Get the `make-env-file` from the repository and execute it anywhere:
+
+```
+make-env-file -h
+```
 
 ## How to use
 
@@ -48,14 +74,40 @@ Usage of make-env:
 
 ### Examples
 
-Create a file if it is not existing:
+**Check**
+
+Create a `dest` file if it is not existing:
 
 ```
-make-env-file -source=.env.example -dest=.env
+ ./make-env-file -source=./example/.env.example -dest=./example/.env2
 ```
 
-Create a file or overwrite if it is already existing:
+Results:
+
+- `.env2` is the copy of `env.example`.
+
+**Create**
+
+Check an already existing `dest` file:
 
 ```
-make-env-file -source=.env.example -dest=.env -overwrite
+ ./make-env-file -source=./example/.env.example -dest=./example/.env
 ```
+
+Results:
+
+- differences between `.env` and `env.example` are displayed.
+- `.env` and `env.example` stay different.
+
+**Overwrite**
+
+Create a `dest` file or overwrite if it is already existing:
+
+```
+ ./make-env-file -source=./example/.env.example -dest=./example/.env -overwrite
+```
+
+Results:
+
+- differences between `.env` and `env.example` are displayed.
+- `.env` is overwritten by `env.example`.
