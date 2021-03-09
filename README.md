@@ -28,8 +28,6 @@ In every case, if files are the same it does nothing.
 
 ## Install
 
-## Install binary
-
 Clone the repository and execute:
 
 ```
@@ -44,16 +42,20 @@ make-env-file -h
 
 ## Build binary
 
-Execute the `make` command to generate a the `make-env-file` file:
+### Build with Docker
+
+Execute the `make` command to generate a `make-env-file` file:
 
 ```
 make build
 ```
 
-It will create a `make-env-file` in the current directory. Then it allows to run:
+### Build manually
+
+Execute the `go buid` command to generate a `make-env-file` file:
 
 ```
-./make-env-file -h
+go build -o make-env-file main.go
 ```
 
 ## How to use
