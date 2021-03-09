@@ -1,6 +1,6 @@
 # Make Env File
 
-Make Env File is a tool to generate an environment file (ex: .env) from another environment file (ie: .env.example).
+Make Env File is a tool to generate an environment file (ex: .env) from another environment file (ex: .env.example).
 
 Sometime applications have a default environment file that must be copied to launch them. It can be useful to have a dedicated tested tool to do that instead of creating a quick script every time it is required.
 
