@@ -12,7 +12,7 @@ func init() {
 
 func main() {
 	// Parse command line options
-	sourceFile, destFile, overwrite := makeenvfile.GetFlags()
+	sourceFile, destFile, overwrite, sleep := makeenvfile.GetFlags()
 	log.Printf("create %s from %s", destFile, sourceFile)
 
 	// Check env
@@ -21,7 +21,7 @@ func main() {
 		log.Fatal(err)
 	}
 	// Make env
-	err = makeenvfile.MakeEnv(sourceFile, destFile, overwrite, report)
+	err = makeenvfile.MakeEnv(sourceFile, destFile, overwrite, report, sleep)
 	if err != nil {
 		log.Fatal(err)
 	}
