@@ -26,10 +26,6 @@ Make Env File creates a `dest` env file from a `source` env file if not existing
 
 In every case, if files are the same it does nothing.
 
-### Sleep at the end
-
-Sleep can be enabled at the end of the execution. It can be useful to have time to see the differences if any.
-
 ## Install
 
 Clone the repository and execute:
@@ -82,8 +78,6 @@ Usage of make-env:
         overwrite if config are not equal.
   -source string
         config file source. (default ".env.example")
-  -timer int
-        seconds to sleep at the end if differences are found
 ```
 
 ### Examples
@@ -105,14 +99,13 @@ Results:
 Check an already existing `dest` file:
 
 ```
- make-env-file -source=./example/.env.example -dest=./example/.env -sleep=5
+ make-env-file -source=./example/.env.example -dest=./example/.env
 ```
 
 Results:
 
 - differences between `.env` and `env.example` are displayed.
 - `.env` and `env.example` stay different.
-- wait 5 seconds at the end.
 
 **Overwrite**
 
