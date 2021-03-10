@@ -12,6 +12,7 @@ import (
 	"regexp"
 	"strconv"
 	"strings"
+	"time"
 )
 
 var configSeparator = "="
@@ -38,13 +39,15 @@ func init() {
 }
 
 // GetFlags parse command line options
-func GetFlags() (string, string, bool) {
-	sourceFile := flag.String("source", ".env.example", "config file source.")
-	destFile := flag.String("dest", ".env", "config file destination.")
-	overwrite := flag.Bool("overwrite", false, "overwrite if config are not equal.")
+func GetFlags() (string, string, bool, int) {
+	sourceFile := flag.String("source", ".env.example", "config file source")
+	destFile := flag.String("dest", ".env", "config file destination")
+	overwrite := flag.Bool("overwrite", false, "overwrite if config are not equal")
+	sleep := flag.Int("sleep", 0, "seconds to sleep at the end if differences are found")
+
 	flag.Parse()
 
-	return *sourceFile, *destFile, *overwrite
+	return *sourceFile, *destFile, *overwrite, *sleep
 }
 
 // ParseConfig and populate Config struct
@@ -187,8 +190,20 @@ func CheckEnv(sourceFile string, destFile string) (Report, error) {
 	return report, nil
 }
 
+// Sleep for n seconds
+func Sleep(sleep int) error {
+	if sleep < 0 {
+		return errors.New("sleep must be a positive value")
+	} else if sleep > 0 {
+		log.Printf("sleep for %d seconds", sleep)
+	}
+
+	time.Sleep(time.Duration(sleep) * time.Second)
+	return nil
+}
+
 // MakeEnv to generate env file
-func MakeEnv(sourceFile string, destFile string, overwrite bool, report Report) error {
+func MakeEnv(sourceFile string, destFile string, overwrite bool, report Report, sleep int) error {
 	if !report.DestExists {
 		log.Printf("dest file does not exists")
 		err := CopyFile(sourceFile, destFile)
@@ -200,17 +215,17 @@ func MakeEnv(sourceFile string, destFile string, overwrite bool, report Report) 
 		log.Printf("warning, %d config files values are not equal:", total)
 		if len(report.NotEquals) > 0 {
 			for _, diff := range report.NotEquals {
-				log.Printf("\t- %s are different.", diff.Name)
+				log.Printf("\t- %s are different", diff.Name)
 			}
 		}
 		if len(report.SourceNotFound) > 0 {
 			for _, diff := range report.SourceNotFound {
-				log.Printf("\t- %s is not in target config.", diff.Name)
+				log.Printf("\t- %s is not in dest config `%s`", diff.Name, sourceFile)
 			}
 		}
 		if len(report.DestNotFound) > 0 {
 			for _, diff := range report.DestNotFound {
-				log.Printf("\t- %s is not in source config.", diff.Name)
+				log.Printf("\t- %s is not in source config `%s`", diff.Name, destFile)
 			}
 		}
 		if overwrite {
@@ -222,7 +237,7 @@ func MakeEnv(sourceFile string, destFile string, overwrite bool, report Report) 
 		} else {
 			log.Printf("overwrite disable, do nothing")
 		}
-
+		Sleep(sleep)
 	} else {
 		log.Printf("config files values are equal, do nothing")
 	}
